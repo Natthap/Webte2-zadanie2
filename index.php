@@ -6,17 +6,12 @@
 
 <body>
 <div id="bodyDiv">
-    <div id="headerId"></div>
     <div id="bodyId">
         <?php
             $page = $_GET["page"];
             switch ($page){
-                /*case "googleCharts": include('subpages/googleCharts.php');
+                case "userPage": include('subpages/userPage.php');
                     break;
-                case "columnCharts": include('subpages/columnCharts.php');
-                    break;
-                case "pieCharts": include('subpages/pieCharts.php');
-                    break;*/
                 default;
                     include("subpages/mainPage.php");
                     break;
