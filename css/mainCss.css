@@ -102,7 +102,8 @@
     padding: 16px 32px;
 }
 
-a {
+.hrefClass, .hrefClass:visited {
+    color: blue;
     text-decoration: none;
 }
 
