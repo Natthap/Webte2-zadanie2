@@ -8,13 +8,27 @@
 <div id="bodyDiv">
     <div id="bodyId">
         <?php
+            include "php/dbcall.php";
+
+            if(isset($_POST['updateData'])) {
+                updateUser($_POST["meno"], $_POST["priezvisko"], $_POST["bday"], $_POST["bplace"], $_POST["bcountry"], $_POST["dday"], $_POST["dplace"], $_POST["dcountry"], $_POST["osobaId"]);
+            }
+
+            if(isset($_POST['deleteData'])) {
+
+            }
+
             $page = $_GET["page"];
             switch ($page){
-                case "userPage": include('subpages/userPage.php');
-                    break;
-                default;
-                    include("subpages/mainPage.php");
-                    break;
+                case "userPage":
+                                 getUserData($_GET["field"]);
+                                 break;
+                case "userEdit":
+                                 getUserDataEdit($_GET["osoba"], $_GET["oh"]);
+                                 break;
+                default:
+                         getMainTable();
+                         break;
             }
         ?>
     </div>
