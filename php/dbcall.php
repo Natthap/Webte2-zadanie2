@@ -44,12 +44,14 @@ switch($params[1]) {
     case $sortParams[1]:
         $params[1] = $sortParams[0];
         break;
+    default:
+        $params[1] = $sortParams[0];
 }
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-        createMainTable($params, $result);
+        createMainTable($params, $result, $sortParams);
 } else {
     echo "RESULTS: 0";
 }
