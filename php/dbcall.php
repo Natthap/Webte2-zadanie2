@@ -92,6 +92,7 @@ JOIN OH
 }
 
 function getUserDataEdit($idOsoba) {
+
     include "php/config.php";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -110,13 +111,63 @@ FROM OSOBY
 
     $result = $conn->query($sql);
 
-    editForm($result->fetch_assoc(), $idOsoba);
+    editUserDataForm($result->fetch_assoc(), $idOsoba);
+
+    $conn->close();
+}
+
+function getUserDetailEdit($idOh, $idOsoba) {
+
+    include "php/config.php";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $conn->set_charset("utf8");
+
+    $sql = "SELECT UMIESTNENIE.place AS place, UMIESTNENIE.discipline AS discipline
+FROM UMIESTNENIE 
+	WHERE UMIESTNENIE.id_person= ".$idOsoba." AND UMIESTNENIE.ID_OH=".$idOh;
+
+    $result = $conn->query($sql);
+
+    editUserDataForm($result->fetch_assoc(), $idOsoba);
 
     $conn->close();
 }
 
 function updateUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplace, $dcountry, $osobaId) {
 
+    include "php/config.php";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $conn->set_charset("utf8");
+
+    $sql = "UPDATE OSOBY SET ";
+    $sql .= $meno ? "name='".$meno."'" : "name=''";
+    $sql .= $priezvisko ? ", surname='".$priezvisko."'" : ", surname=''";
+    $sql .= $bday ? ", birthDay='".$bday."'" : ", birthDay=''";
+    $sql .= $bplace ? ", birthPlace='".$bplace."'" : ", birthPlace=''";
+    $sql .= $bcountry ? ", birthCountry='".$bcountry."'" : ", birthCountry=''";
+    $sql .= $dday ? ", deathDay='".$dday."'" : ", deathDay=''";
+    $sql .= $dplace ? ", deathPlace='".$dplace."'" : ", deathPlace=''";
+    $sql .= $dcountry ? ", deathCountry='".$dcountry."'" : ", deathCountry=''";
+    $sql .= " WHERE _person=".$osobaId;
+
+    $conn->query($sql);
+
+    $conn->close();
+}
+
+function updateUserDetail($idOh) {
     include "php/config.php";
 
     $conn = new mysqli($servername, $username, $password, $dbname);

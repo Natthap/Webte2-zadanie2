@@ -6,8 +6,7 @@
  * Time: 22:42
  */
 
-function createMainTable($params, $result, $sortParams)
-{
+function createMainTable($params, $result, $sortParams) {
     echo "<table id=" . "myTable" . " class=" . "tablesorter" . ">
         <thead> 
             <tr>
@@ -130,7 +129,7 @@ function createMainTable($params, $result, $sortParams)
     }
 
 
-    function editForm($result) {
+    function editUserDataForm($result) {
         echo "<form action=\"index.php\" method=\"post\" name=\"updateData\">
               <input type='hidden' name='osobaId' value=".$result["idOsoba"].">
               <br>
@@ -157,6 +156,25 @@ function createMainTable($params, $result, $sortParams)
               <br>
               Krajina umrtia:
               <input type=\"text\" name=\"dcountry\" value=".$result["dcountry"].">
+              <br>
+              <br>
+              <input type=\"submit\" value=\"Odoslat\" name=\"updateData\">
+            </form> ";
+    }
+
+    function editUserDetailForm($result) {
+        echo "<form action=\"index.php\" method=\"post\" name=\"updateData\">
+              <input type='hidden' name='osobaId' value=".$result["idOsoba"].">
+              <input type='hidden' name='osobaId' value=".$result["idOh"].">
+              <br>
+              
+              //Dorobit formular a upravit volanie funkcie
+              
+              Meno:
+              <input type=\"text\" name=\"meno\" value=".$result["Meno"].">
+              <br>
+              Priezvisko:
+              <input type=\"text\" name=\"priezvisko\" value=".$result["Priezvisko"].">
               <br>
               <br>
               <input type=\"submit\" value=\"Odoslat\" name=\"updateData\">
