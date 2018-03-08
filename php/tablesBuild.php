@@ -64,8 +64,14 @@ function createMainTable($params, $result, $sortParams)
         echo "<td><a href="."index.php?page=userEdit&osoba=".$row["idOsoba"]."><button>Edit</button></td>";
         echo "<td>
                   <form action=\"index.php\" method=\"post\" name=\"deleteData\">
-                  <input type='hidden' name='osobaId' value=".row["idOh"].">
-                  <input type=\"submit\" value=\"Delete\" name=\"deleteData\">
+                  <input type='hidden' name='idOh' value=".$row["idOh"].">
+                  <input type=\"submit\" value=\"Vymazat zaznam\" name=\"deleteData\">
+                  </form>
+              </td>";
+        echo "<td>
+                  <form action=\"index.php\" method=\"post\" name=\"deleteUser\">
+                  <input type='hidden' name='idOsoba' value=".$row["idOsoba"].">
+                  <input type=\"submit\" value=\"Vymazat uzivatela\" name=\"deleteUser\">
                   </form>
               </td>";
         echo "</tr>";
@@ -96,6 +102,7 @@ function createMainTable($params, $result, $sortParams)
         </thead>
         <tbody>";
         while($row = $result->fetch_assoc()) {
+            echo $row["idOh"];
             echo "<tr>";
             echo "<td>".$row["Meno"]."</td>";
             echo "<td>".$row["Priezvisko"]."</td>";
@@ -106,11 +113,17 @@ function createMainTable($params, $result, $sortParams)
             echo "<td>".$row["Umiestnenie"]."</td>";
             echo "<td><a href="."index.php?page=userEdit&osoba=".$row["idOsoba"]."><button>Edit</button></td>";
             echo "<td>
-                      <form action=\"index.php\" method=\"post\" name=\"deleteData\">
-                      <input type='hidden' name='osobaId' value=".row["idOh"].">
-                      <input type=\"submit\" value=\"Delete\" name=\"deleteData\">
-                      </form>
-                  </td>";
+                  <form action=\"index.php\" method=\"post\" name=\"deleteData\">
+                  <input type='hidden' name='idOh' value=".$row["idOh"].">
+                  <input type=\"submit\" value=\"Vymazat zaznam\" name=\"deleteData\">
+                  </form>
+              </td>";
+            echo "<td>
+                  <form action=\"index.php\" method=\"post\" name=\"deleteUser\">
+                  <input type='hidden' name='idOsoba' value=".$row["idOsoba"].">
+                  <input type=\"submit\" value=\"Vymazat uzivatela\" name=\"deleteUser\">
+                  </form>
+              </td>";
             echo "</tr>";
         }
         echo "</tbody></table>";

@@ -60,7 +60,6 @@ ORDER BY ";
     $conn->close();
 }
 
-
 function getUserData($id) {
     include "php/config.php";
 
@@ -117,7 +116,6 @@ FROM OSOBY
 }
 
 function updateUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplace, $dcountry, $osobaId) {
-    //echo "<p>".$meno."</p>";
 
     include "php/config.php";
 
@@ -149,7 +147,7 @@ function updateUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplac
     $conn->close();
 }
 
-function deleteUserDetail() {
+function deleteUserDetail($idOh) {
     include "php/config.php";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -160,22 +158,41 @@ function deleteUserDetail() {
 
     $conn->set_charset("utf8");
 
-    $sql = "UPDATE OSOBY SET ";
-    $sql .= $meno ? "name='".$meno."'" : "name=''";
-    $sql .= $priezvisko ? ", surname='".$priezvisko."'" : ", surname=''";
-    $sql .= $bday ? ", birthDay='".$bday."'" : ", birthDay=''";
-    $sql .= $bplace ? ", birthPlace='".$bplace."'" : ", birthPlace=''";
-    $sql .= $bcountry ? ", birthCountry='".$bcountry."'" : ", birthCountry=''";
-    $sql .= $dday ? ", deathDay='".$dday."'" : ", deathDay=''";
-    $sql .= $dplace ? ", deathPlace='".$dplace."'" : ", deathPlace=''";
-    $sql .= $dcountry ? ", deathCountry='".$dcountry."'" : ", deathCountry=''";
-    $sql .= " WHERE _person=".$osobaId;
-
-    echo $sql;
+    $sql = "SELECT UMIESTNENIE.ID AS id FROM UMIESTNENIE JOIN OH ON OH._OH = UMIESTNENIE.ID_OH WHERE OH._OH = ".$idOh;
 
     $result = $conn->query($sql);
 
-    echo $result;
+    $result = $result->fetch_assoc();
+
+    $sql = "DELETE FROM UMIESTNENIE WHERE UMIESTNENIE.ID=".$result["id"];
+
+    $conn->query($sql);
+
+    $conn->close();
+}
+
+function deleteUser($osobaId) {
+    include "php/config.php";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $conn->set_charset("utf8");
+
+    $sql = "DELETE FROM UMIESTNENIE WHERE UMIESTNENIE.id_person =".$osobaId;
+
+    echo $sql;
+
+    $conn->query($sql);
+
+    $sql = "DELETE FROM OSOBY WHERE OSOBY._person=".$osobaId;
+
+    echo $sql;
+
+    $conn->query($sql);
 
     $conn->close();
 }
