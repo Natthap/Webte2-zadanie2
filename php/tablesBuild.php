@@ -6,7 +6,7 @@
  * Time: 22:42
  */
 
-function createMainTable($params, $result, $sortParams) {
+    function createMainTable($params, $result, $sortParams) {
     echo "<table id=" . "myTable" . " class=" . "tablesorter" . ">
         <thead> 
             <tr>
@@ -60,7 +60,8 @@ function createMainTable($params, $result, $sortParams) {
         echo "<td>" . $row["Typ"] . "</td>";
         echo "<td>" . $row["Disciplina"] . "</td>";
         echo "<td>" . $row["Umiestnenie"] . "</td>";
-        echo "<td><a href="."index.php?page=userEdit&osoba=".$row["idOsoba"]."><button>Edit</button></td>";
+        echo "<td><a href="."index.php?page=userDataEdit&osoba=".$row["idOsoba"]."><button>Upravit osobu</button></td>";
+        echo "<td><a href="."index.php?page=userDetailEdit&osoba=".$row["idOsoba"]."&oh=".$row["idOh"]."><button>Upravit detail</button></td>";
         echo "<td>
                   <form action=\"index.php\" method=\"post\" name=\"deleteData\">
                   <input type='hidden' name='idOh' value=".$row["idOh"].">
@@ -77,7 +78,6 @@ function createMainTable($params, $result, $sortParams) {
     }
     echo "</tbody></table>";
 }
-
 
     function createUserTable($result) {
         echo "<table id="."myTable"." class="."tablesorter".">
@@ -110,7 +110,8 @@ function createMainTable($params, $result, $sortParams) {
             echo "<td>".$row["Typ"]."</td>";
             echo "<td>".$row["Disciplina"]."</td>";
             echo "<td>".$row["Umiestnenie"]."</td>";
-            echo "<td><a href="."index.php?page=userEdit&osoba=".$row["idOsoba"]."><button>Edit</button></td>";
+            echo "<td><a href="."index.php?page=userDataEdit&osoba=".$row["idOsoba"]."><button>Upravit osobu</button></td>";
+            echo "<td><a href="."index.php?page=userDetailEdit&osoba=".$row["idOsoba"]."&oh=".$row["idOh"]."><button>Upravit detail</button></td>";
             echo "<td>
                   <form action=\"index.php\" method=\"post\" name=\"deleteData\">
                   <input type='hidden' name='idOh' value=".$row["idOh"].">
@@ -127,7 +128,6 @@ function createMainTable($params, $result, $sortParams) {
         }
         echo "</tbody></table>";
     }
-
 
     function editUserDataForm($result) {
         echo "<form action=\"index.php\" method=\"post\" name=\"updateData\">
@@ -162,22 +162,23 @@ function createMainTable($params, $result, $sortParams) {
             </form> ";
     }
 
-    function editUserDetailForm($result) {
-        echo "<form action=\"index.php\" method=\"post\" name=\"updateData\">
-              <input type='hidden' name='osobaId' value=".$result["idOsoba"].">
-              <input type='hidden' name='osobaId' value=".$result["idOh"].">
+    function editUserDetailForm($result, $idOsoba, $idOh) {
+        echo "<form action=\"index.php\" method=\"post\" name=\"updateDetail\">
+              <input type='hidden' name='idOsoba' value=".$idOsoba.">
+              <input type='hidden' name='idOh' value=".$idOh.">
+              <br>              
+              Miesto:
+              <input type=\"text\" name=\"place\" value=".$result["place"].">
               <br>
-              
-              //Dorobit formular a upravit volanie funkcie
-              
-              Meno:
-              <input type=\"text\" name=\"meno\" value=".$result["Meno"].">
-              <br>
-              Priezvisko:
-              <input type=\"text\" name=\"priezvisko\" value=".$result["Priezvisko"].">
+              Disciplina:
+              <input type=\"text\" name=\"discipline\" value=".$result["discipline"].">
               <br>
               <br>
-              <input type=\"submit\" value=\"Odoslat\" name=\"updateData\">
+              <input type=\"submit\" value=\"Odoslat\" name=\"updateDetail\">
             </form> ";
     }
+
+    function createUserDataForm() {}
+
+    function createUserDetailForm() {}
 ?>

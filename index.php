@@ -14,6 +14,10 @@
                 updateUser($_POST["meno"], $_POST["priezvisko"], $_POST["bday"], $_POST["bplace"], $_POST["bcountry"], $_POST["dday"], $_POST["dplace"], $_POST["dcountry"], $_POST["osobaId"]);
             }
 
+            if(isset($_POST['updateDetail'])) {
+                updateUserDetail($_POST["idOh"], $_POST["idOsoba"], $_POST["place"], $_POST["discipline"]);
+            }
+
             if(isset($_POST['deleteData'])) {
                 deleteUserDetail($_POST["idOh"]);
             }
@@ -22,13 +26,30 @@
                 deleteUser($_POST[idOsoba]);
             }
 
+            if(isset($_POST['createData'])) {
+
+            }
+
+            if(isset($_POST['createUser'])) {
+
+            }
+
             $page = $_GET["page"];
             switch ($page){
                 case "userPage":
                                  getUserData($_GET["field"]);
                                  break;
-                case "userEdit":
+                case "userDataEdit":
                                  getUserDataEdit($_GET["osoba"], $_GET["oh"]);
+                                 break;
+                case "userDetailEdit":
+                                 getUserDetailEdit($_GET["osoba"], $_GET["oh"]);
+                                 break;
+                case "newUser":
+
+                                 break;
+                case "newDetail":
+
                                  break;
                 default:
                          getMainTable();
