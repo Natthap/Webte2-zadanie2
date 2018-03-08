@@ -26,12 +26,12 @@
                 deleteUser($_POST[idOsoba]);
             }
 
-            if(isset($_POST['createData'])) {
-
+            if(isset($_POST['createUser'])) {
+                createUser($_POST["meno"], $_POST["priezvisko"], $_POST["bday"], $_POST["bplace"], $_POST["bcountry"], $_POST["dday"], $_POST["dplace"], $_POST["dcountry"]);
             }
 
-            if(isset($_POST['createUser'])) {
-
+            if(isset($_POST['createDetail'])) {
+                createUserDetail($_POST["meno"], $_POST["priezvisko"], $_POST["rok"], $_POST["miesto"], $_POST["typ"], $_POST["place"], $_POST["discipline"]);
             }
 
             $page = $_GET["page"];
@@ -46,10 +46,10 @@
                                  getUserDetailEdit($_GET["osoba"], $_GET["oh"]);
                                  break;
                 case "newUser":
-
+                                 createUserDataForm();
                                  break;
                 case "newDetail":
-
+                                 createUserDetailForm();
                                  break;
                 default:
                          getMainTable();

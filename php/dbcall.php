@@ -228,7 +228,43 @@ include "php/tablesBuild.php";
     $conn->close();
 }
 
-    function createUserDetail() {}
+    function createUserDetail() {
 
-    function createUser() {}
+    }
+
+    function createUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplace, $dcountry) {
+        include "php/config.php";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $conn->set_charset("utf8");
+
+        $sql = "INSERT INTO OSOBY (";
+        $sql .= $meno ? "name" : "";
+        $sql .= $priezvisko ? ", surname" : "";
+        $sql .= $bday ? ", birthDay" : "";
+        $sql .= $bplace ? ", birthPlace" : "";
+        $sql .= $bcountry ? ", birthCountry" : "";
+        $sql .= $dday ? ", deathDay" : "";
+        $sql .= $dplace ? ", deathPlace" : "";
+        $sql .= $dcountry ? ", deathCountry" : "";
+        $sql .= ") VALUES (";
+        $sql .= $meno ? "'".$meno."'," : "";
+        $sql .= $priezvisko ? " '".$priezvisko."'," : "";
+        $sql .= $bday ? " '".$bday."'," : "";
+        $sql .= $bplace ? " '".$bplace."'," : "";
+        $sql .= $bcountry ? " '".$bcountry."'," : "";
+        $sql .= $dday ? " '".$dday."'," : "";
+        $sql .= $dplace ? " '".$dplace."'," : "";
+        $sql .= $dcountry ? " '".$dcountry."'" : "";
+        $sql .= ")";
+
+        $conn->query($sql);
+
+        $conn->close();
+    }
 ?>

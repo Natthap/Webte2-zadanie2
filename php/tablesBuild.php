@@ -45,6 +45,20 @@
                         Umiestnenie
                     </a>
                 </th>
+                <th>
+                    <a href="."index.php?page=newUser>
+                        <button>
+                            Vytvorit uzivatela
+                        </button>
+                    </a>
+                </th>
+                <th>
+                    <a href="."index.php?page=newDetail>
+                        <button>
+                            Vytvorit detail
+                        </button>
+                    </a>
+                </th>
             </tr>
         </thead>
     <tbody>";
@@ -96,6 +110,20 @@
                 <th>Disciplina
                 </th>
                 <th>Umiestnenie
+                </th>
+                <th>
+                    <a href="."index.php?page=newUser>
+                        <button>
+                            Vytvorit uzivatela
+                        </button>
+                    </a>
+                </th>
+                <th>
+                    <a href="."index.php?page=newDetail>
+                        <button>
+                            Vytvorit detail
+                        </button>
+                    </a>
                 </th>
             </tr>
         </thead>
@@ -167,7 +195,7 @@
               <input type='hidden' name='idOsoba' value=".$idOsoba.">
               <input type='hidden' name='idOh' value=".$idOh.">
               <br>              
-              Miesto:
+              Umiestnenie:
               <input type=\"text\" name=\"place\" value=".$result["place"].">
               <br>
               Disciplina:
@@ -178,7 +206,62 @@
             </form> ";
     }
 
-    function createUserDataForm() {}
+    function createUserDataForm() {
+        echo "<form action=\"index.php\" method=\"post\" name=\"createUser\">
+              Meno:
+              <input type=\"text\" name=\"meno\" value=\"\">
+              <br>
+              Priezvisko:
+              <input type=\"text\" name=\"priezvisko\" value=\"\">
+              <br>
+              Den narodenia:
+              <input type=\"text\" name=\"bday\" value=\"\">
+              <br>
+              Miesto narodenia:
+              <input type=\"text\" name=\"bplace\" value=\"\">
+              <br>
+              Krajina narodenia:
+              <input type=\"text\" name=\"bcountry\" value=\"\">
+              <br>
+              Den umrtia:
+              <input type=\"text\" name=\"dday\" value=\"\">
+              <br>
+              Miesto umrtia:
+              <input type=\"text\" name=\"dplace\" value=\"\">
+              <br>
+              Krajina umrtia:
+              <input type=\"text\" name=\"dcountry\" value=\"\">
+              <br>
+              <br>
+              <input type=\"submit\" value=\"Odoslat\" name=\"createUser\">
+            </form> ";
+    }
 
-    function createUserDetailForm() {}
+    function createUserDetailForm() {
+        echo "<form action=\"index.php\" method=\"post\" name=\"createDetail\">
+              Meno:
+              <input type=\"text\" name=\"meno\" value=\"\">
+              <br>
+              Priezvisko:
+              <input type=\"text\" name=\"priezvisko\" value=\"\">
+              <br>              
+              Rok:
+              <input type=\"text\" name=\"rok\" value=\"\">
+              <br>   
+              Miesto:
+              <input type=\"text\" name=\"miesto\" value=\"\">
+              <br>   
+              Typ:
+              <input type=\"text\" name=\"typ\" value=\"\">
+              <br>   
+              Umiestnenie:
+              <input type=\"text\" name=\"place\" value=\"\">
+              <br>
+              Disciplina:
+              <input type=\"text\" name=\"discipline\" value=\"\">
+              <br>
+              <br>
+              <input type=\"submit\" value=\"Odoslat\" name=\"createDetail\">
+            </form> ";
+    }
 ?>
