@@ -31,7 +31,7 @@
             }
 
             if(isset($_POST['createDetail'])) {
-                createUserDetail($_POST["meno"], $_POST["priezvisko"], $_POST["rok"], $_POST["miesto"], $_POST["typ"], $_POST["place"], $_POST["discipline"]);
+                createUserDetail($_POST["idOsoba"], $_POST["idOh"], $_POST["place"], $_POST["discipline"]);
             }
 
             $page = $_GET["page"];
@@ -49,7 +49,7 @@
                                  createUserDataForm();
                                  break;
                 case "newDetail":
-                                 createUserDetailForm();
+                                 createUserDetailForm(getAllUserNames(), getAllOh());
                                  break;
                 default:
                          getMainTable();

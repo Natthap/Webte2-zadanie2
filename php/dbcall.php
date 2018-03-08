@@ -122,7 +122,7 @@ include "php/tablesBuild.php";
         $conn->set_charset("utf8");
 
         $sql = "SELECT UMIESTNENIE.place AS place, UMIESTNENIE.discipline AS discipline
-    FROM UMIESTNENIE 
+        FROM UMIESTNENIE 
         WHERE UMIESTNENIE.id_person= ".$idOsoba." AND UMIESTNENIE.ID_OH=".$idOh;
 
         $result = $conn->query($sql);
@@ -130,6 +130,42 @@ include "php/tablesBuild.php";
         editUserDetailForm($result->fetch_assoc(), $idOsoba, $idOh);
 
         $conn->close();
+    }
+
+    function getAllUserNames() {
+        include "php/config.php";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $conn->set_charset("utf8");
+
+        $sql = "SELECT OSOBY.name AS name, OSOBY.surname AS surname, OSOBY._person AS id FROM OSOBY";
+
+        $result = $conn->query($sql);
+
+        return $result;
+    }
+
+    function getAllOh() {
+        include "php/config.php";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $conn->set_charset("utf8");
+
+        $sql = "SELECT OH.type AS typ, OH.year AS rok, OH.city AS mesto, OH._OH AS id FROM OH";
+
+        $result = $conn->query($sql);
+
+        return $result;
     }
 
     function updateUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplace, $dcountry, $osobaId) {
@@ -228,8 +264,32 @@ include "php/tablesBuild.php";
     $conn->close();
 }
 
-    function createUserDetail() {
+    function createUserDetail($idOsoba, $idOh, $place, $discipline) {
+        include "php/config.php";
 
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $conn->set_charset("utf8");
+
+        $sql = "INSERT INTO UMIESTNENIE (";
+        $sql .= $idOsoba ? "id_person" : "";
+        $sql .= $idOh ? ", ID_OH" : "";
+        $sql .= $place ? ", place" : "";
+        $sql .= $discipline ? ", discipline" : "";
+        $sql .= ") VALUES (";
+        $sql .= $idOsoba ? " '" . $idOsoba . "'" : "";
+        $sql .= $idOh ? ", '" . $idOh . "'" : "";
+        $sql .= $place ? ", '" . $place . "'" : "";
+        $sql .= $discipline ? ", '" . $discipline . "'" : "";
+        $sql .= ")";
+
+        $conn->query($sql);
+
+        $conn->close();
     }
 
     function createUser($meno, $priezvisko, $bday, $bplace, $bcountry, $dday, $dplace, $dcountry) {
@@ -243,27 +303,38 @@ include "php/tablesBuild.php";
 
         $conn->set_charset("utf8");
 
-        $sql = "INSERT INTO OSOBY (";
-        $sql .= $meno ? "name" : "";
-        $sql .= $priezvisko ? ", surname" : "";
-        $sql .= $bday ? ", birthDay" : "";
-        $sql .= $bplace ? ", birthPlace" : "";
-        $sql .= $bcountry ? ", birthCountry" : "";
-        $sql .= $dday ? ", deathDay" : "";
-        $sql .= $dplace ? ", deathPlace" : "";
-        $sql .= $dcountry ? ", deathCountry" : "";
-        $sql .= ") VALUES (";
-        $sql .= $meno ? "'".$meno."'," : "";
-        $sql .= $priezvisko ? " '".$priezvisko."'," : "";
-        $sql .= $bday ? " '".$bday."'," : "";
-        $sql .= $bplace ? " '".$bplace."'," : "";
-        $sql .= $bcountry ? " '".$bcountry."'," : "";
-        $sql .= $dday ? " '".$dday."'," : "";
-        $sql .= $dplace ? " '".$dplace."'," : "";
-        $sql .= $dcountry ? " '".$dcountry."'" : "";
-        $sql .= ")";
+        $sql = "SELECT * FROM OSOBY 
+        WHERE OSOBY.name ='".$meno."' AND OSOBY.surname='".$priezvisko."' AND OSOBY.birthDay='".$bday."'";
 
-        $conn->query($sql);
+        $result = $conn->query($sql);
+
+        if($result->num_rows < 1) {
+            $sql = "INSERT INTO OSOBY (";
+            $sql .= $meno ? "name" : "";
+            $sql .= $priezvisko ? ", surname" : "";
+            $sql .= $bday ? ", birthDay" : "";
+            $sql .= $bplace ? ", birthPlace" : "";
+            $sql .= $bcountry ? ", birthCountry" : "";
+            $sql .= $dday ? ", deathDay" : "";
+            $sql .= $dplace ? ", deathPlace" : "";
+            $sql .= $dcountry ? ", deathCountry" : "";
+            $sql .= ") VALUES (";
+            $sql .= $meno ? " '" . $meno . "'" : "";
+            $sql .= $priezvisko ? ", '" . $priezvisko . "'" : "";
+            $sql .= $bday ? ", '" . $bday . "'" : "";
+            $sql .= $bplace ? ", '" . $bplace . "'" : "";
+            $sql .= $bcountry ? ", '" . $bcountry . "'" : "";
+            $sql .= $dday ? ", '" . $dday . "'" : "";
+            $sql .= $dplace ? ", '" . $dplace . "'" : "";
+            $sql .= $dcountry ? ", '" . $dcountry . "'" : "";
+            $sql .= ")";
+
+            $conn->query($sql);
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Sportovec uz existuje")';
+            echo '</script>';
+        }
 
         $conn->close();
     }
